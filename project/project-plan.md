@@ -33,7 +33,7 @@ This data source contains data emissions in all the countries from the years 197
 
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
 
-1. Example Issue [#1][i1]
+1. Data Extraction Issue [#1][i1]
 2. ...
 
-[i1]: https://github.com/jvalue/made-template/issues/1
+[i1]: https://github.com/UmarNaeem7/MADE-JV/issues/1#issue-2647649796
