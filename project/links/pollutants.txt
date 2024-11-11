@@ -1,0 +1,4 @@
+https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/EDGAR/datasets/EDGAR_2024_GHG/EDGAR_CH4_1970_2023.zip
+https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/EDGAR/datasets/v81_FT2022_AP_new/EDGAR_NH3_1970_2022.zip
+https://edgar.jrc.ec.europa.eu/datasets/EDGAR-FOOD_v61_AP.xlsx
+https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/EDGAR/datasets/v81_FT2022_TOX/Hg_D_1970_2022_v2.zip
