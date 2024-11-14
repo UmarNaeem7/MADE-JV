@@ -31,6 +31,21 @@ This data source contains data about air quality measurements in pm 2.5 metric f
 
 This data source contains data about emissions of CH4 (Methane) in all the countries from the years 1970.2022. Emissions can be of several types like greenhouse gases, aerosols, air pollutants, etc. This dataset focuses on the emissions of methane gas in particular.
 
+## Project Pipeline
+
+### Data Extraction & Preprocessing
+The project requires the use of several datasets. They have been divided into 2 categories based on the purpose they will serve in this project:
+
+1. Air quality metrics
+2. Pollutants
+
+Since, there are 7 datasets to be used in the project, their corresponding download urls have been placed in a links folder inside the project dir based on their category of use.
+
+The script `data_extraction.py` takes care of automating the data extraction process by automatically fetching the urls from the `links` folder & then saving them to the `data` dir.
+
+All the download urls give a zip file with the dataset in the excel format. The built-in python library `zipfile` is used to unzip the response from the get requests & then the excel file that is the dataset is found & saved in the `data` dir.
+The datasets are already cleaned & ready for use out of the box for the purpose of this project so no additional pre-processing is required. 
+
 
 ## Work Packages
 

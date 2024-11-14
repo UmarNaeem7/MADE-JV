@@ -1,3 +1,5 @@
+# To be run within the 'project' dir
+
 # Check if the virtual environment exists
 if [ -d "project_venv" ]; then
     echo "Virtual environment already exists. Activating..."
