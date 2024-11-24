@@ -4,6 +4,7 @@ import zipfile
 from typing import List
 
 import requests
+from tenacity import retry, stop_after_attempt, wait_fixed
 
 links_folder = "links"
 data_folder = "data"
@@ -26,6 +27,7 @@ def load_urls(links_path: str) -> List[str]:
     return urls
 
 
+@retry(wait=wait_fixed(3), stop=stop_after_attempt(3))
 def load_save_data(url: str, data_path: str):
     response = requests.get(url)
     if response.status_code == 200:
@@ -68,7 +70,10 @@ def main():
 
     # save dataset from each url to the data folder
     for url in data_urls:
-        load_save_data(url, data_path)
+        try:
+            load_save_data(url, data_path)
+        except Exception as e:
+            print(f"Operation load_save_data failed after retries: {e}")
 
 
 if __name__ == "__main__":
