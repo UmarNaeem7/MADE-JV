@@ -52,8 +52,9 @@ The datasets are already cleaned & ready for use out of the box for the purpose 
 <!-- List of work packages ordered sequentially, each pointing to an issue with more details. -->
 
 1. Data Extraction Issue [#1][i1]
-2. ...
+2. Automated Tests Issue [#2][i4]
 
 [i1]: https://github.com/UmarNaeem7/MADE-JV/issues/1#issue-2647649796
 [i2]: https://github.com/UmarNaeem7/MADE-JV/blob/main/project/links/air_quality_metrics.txt
 [i3]: https://github.com/UmarNaeem7/MADE-JV/blob/main/project/links/pollutants.txt
+[i4]: https://github.com/UmarNaeem7/MADE-JV/issues/2#issue-2719062504
