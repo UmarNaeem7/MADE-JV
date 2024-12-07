@@ -1,0 +1,36 @@
+name: Run Tests on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Step 3: List files in the repository root
+      - name: List Root Directory Contents
+        run: ls
+
+      # Step 4: List files in the 'project' directory
+      - name: List Project Directory Contents
+        run: ls project
+
+      # Step 5: Navigate to the project directory and run the script
+      - name: Run Pipeline
+        run: |
+            cd project
+            chmod +x tests.sh
+            ./tests.sh
