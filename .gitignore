@@ -3,3 +3,4 @@
 !/data/.gitkeep
 project_venv
 .vscode
+__pycache__/
