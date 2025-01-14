@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 
-file_path = "../../data/EDGAR_NOx_1970_2022.xlsx"
+file_path = "../../data/EDGAR_PM10_1970_2022.xlsx"
 
 # Read the Excel file, skipping the first 9 rows
 df = pd.read_excel(file_path, sheet_name="TOTALS BY COUNTRY", skiprows=9)
@@ -49,22 +49,21 @@ years = np.array(
 slopes = []
 
 for index, row in filtered_df.iterrows():
-    nox_values = row.loc["Y_1970":"Y_2022"].values.reshape(-1, 1)
+    pm10_values = row.loc["Y_1970":"Y_2022"].values.reshape(-1, 1)
     model = LinearRegression()
-    model.fit(years, nox_values)
+    model.fit(years, pm10_values)
     slopes.append(model.coef_[0][0])  # Store slope (rate of change per year)
 
 trends_df["Linear_Trend_Slope"] = slopes
 
-# 6. Max and Min NOx Values and Their Years
-trends_df["Max_NOx_Year"] = filtered_df.loc[:, "Y_1970":"Y_2022"].idxmax(axis=1)
-trends_df["Min_NOx_Year"] = filtered_df.loc[:, "Y_1970":"Y_2022"].idxmin(axis=1)
+# 6. Max and Min PM10 Values and Their Years
+trends_df["Max_PM10_Year"] = filtered_df.loc[:, "Y_1970":"Y_2022"].idxmax(axis=1)
+trends_df["Min_PM10_Year"] = filtered_df.loc[:, "Y_1970":"Y_2022"].idxmin(axis=1)
 
 # 7. Latest Year Contribution (Percent of Total)
 total_2022 = filtered_df["Y_2022"].sum()
 trends_df["Contribution_2022"] = (filtered_df["Y_2022"] / total_2022) * 100
-# print("Trends df:")
-# print(trends_df)
+
 
 # only include prominent countries in final df
 final_df = trends_df[trends_df["Name"].isin(countries_list)]
@@ -78,7 +77,7 @@ plt.plot(
 )
 
 # Add title and labels
-plt.title("Percent Change of NOx from 1975 to 2022 by Country", fontsize=14)
+plt.title("Percent Change of PM10 from 1975 to 2022 by Country", fontsize=14)
 plt.xlabel("Country", fontsize=12)
 plt.ylabel("Percent Change", fontsize=12)
 
@@ -91,10 +90,12 @@ plt.figure(figsize=(12, 6))  # Adjust figure size (optional)
 plt.bar(final_df["Name"], final_df["Contribution_2022"], color="c")
 
 # Add title and labels
-plt.title("Contribution of Each Country to Total NOx in Americas in 2022", fontsize=14)
+plt.title("Contribution of Each Country to Total PM10 in Americas in 2022", fontsize=14)
 plt.xlabel("Country", fontsize=12)
 plt.ylabel("Contribution in 2022 (%)", fontsize=12)
 
 # Display the plot
 plt.tight_layout()  # Adjust layout to prevent label overlap
 plt.show()
+
+final_df.to_csv("./final_dfs/final_pm10_trends.csv", index=False)

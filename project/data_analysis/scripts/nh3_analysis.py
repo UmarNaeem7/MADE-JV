@@ -98,3 +98,5 @@ plt.ylabel("Contribution in 2022 (%)", fontsize=12)
 # Display the plot
 plt.tight_layout()  # Adjust layout to prevent label overlap
 plt.show()
+
+final_df.to_csv("./final_dfs/final_nh3_trends.csv", index=False)

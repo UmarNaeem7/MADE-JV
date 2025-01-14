@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 
-file_path = "../../data/EDGAR_PM2.5_1970_2022.xlsx"
+file_path = "../../data/EDGAR_CH4_1970_2023.xlsx"
 
 # Read the Excel file, skipping the first 9 rows
 df = pd.read_excel(file_path, sheet_name="TOTALS BY COUNTRY", skiprows=9)
@@ -44,21 +44,25 @@ trends_df["Volatility"] = filtered_df.loc[:, "Y_1970":"Y_2022"].std(axis=1)
 
 # 5. Linear Trend (Slope)
 years = np.array(
-    [int(col[2:]) for col in filtered_df.columns if col.startswith("Y_")]
+    [
+        int(col[2:])
+        for col in filtered_df.columns
+        if col.startswith("Y_") and not col.endswith("2023")
+    ]
 ).reshape(-1, 1)
 slopes = []
 
 for index, row in filtered_df.iterrows():
-    pm2_values = row.loc["Y_1970":"Y_2022"].values.reshape(-1, 1)
+    ch4_values = row.loc["Y_1970":"Y_2022"].values.reshape(-1, 1)
     model = LinearRegression()
-    model.fit(years, pm2_values)
+    model.fit(years, ch4_values)
     slopes.append(model.coef_[0][0])  # Store slope (rate of change per year)
 
 trends_df["Linear_Trend_Slope"] = slopes
 
-# 6. Max and Min PM2.5 Values and Their Years
-trends_df["Max_PM2.5_Year"] = filtered_df.loc[:, "Y_1970":"Y_2022"].idxmax(axis=1)
-trends_df["Min_PM2.5_Year"] = filtered_df.loc[:, "Y_1970":"Y_2022"].idxmin(axis=1)
+# 6. Max and Min CH4 Values and Their Years
+trends_df["Max_CH4_Year"] = filtered_df.loc[:, "Y_1970":"Y_2022"].idxmax(axis=1)
+trends_df["Min_CH4_Year"] = filtered_df.loc[:, "Y_1970":"Y_2022"].idxmin(axis=1)
 
 # 7. Latest Year Contribution (Percent of Total)
 total_2022 = filtered_df["Y_2022"].sum()
@@ -78,7 +82,7 @@ plt.plot(
 )
 
 # Add title and labels
-plt.title("Percent Change of PM2.5 from 1975 to 2022 by Country", fontsize=14)
+plt.title("Percent Change of CH4 from 1975 to 2022 by Country", fontsize=14)
 plt.xlabel("Country", fontsize=12)
 plt.ylabel("Percent Change", fontsize=12)
 
@@ -91,12 +95,12 @@ plt.figure(figsize=(12, 6))  # Adjust figure size (optional)
 plt.bar(final_df["Name"], final_df["Contribution_2022"], color="c")
 
 # Add title and labels
-plt.title(
-    "Contribution of Each Country to Total PM2.5 in Americas in 2022", fontsize=14
-)
+plt.title("Contribution of Each Country to Total CH4 in Americas in 2022", fontsize=14)
 plt.xlabel("Country", fontsize=12)
 plt.ylabel("Contribution in 2022 (%)", fontsize=12)
 
 # Display the plot
 plt.tight_layout()  # Adjust layout to prevent label overlap
 plt.show()
+
+final_df.to_csv("./final_dfs/final_ch4_trends.csv", index=False)

@@ -103,3 +103,5 @@ plt.ylabel("Contribution in 2018 (%)", fontsize=12)
 # Display the plot
 plt.tight_layout()  # Adjust layout to prevent label overlap
 plt.show()
+
+trends_df.to_csv("./final_dfs/final_food_trends.csv", index=False)
