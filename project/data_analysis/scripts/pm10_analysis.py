@@ -15,19 +15,24 @@ countries_list = [
     "Brazil",
     "Chile",
     "Venezuela",
+    "Canada",
 ]
 
-groups_list = ["Rest Central America", "Rest South America", "USA", "Mexico", "Brazil"]
+groups_list = [
+    "Rest Central America",
+    "Rest South America",
+    "USA",
+    "Mexico",
+    "Brazil",
+    "Canada",
+]
 
 filtered_df = df[df["C_group_IM24_sh"].isin(groups_list)]
-
-# print(filtered_df.head())
 
 trends_df = pd.DataFrame()
 trends_df[["Name", "Y_2022"]] = filtered_df[["Name", "Y_2022"]]
 
 # Calculate trend metrics
-
 # 1. Percent Change
 trends_df["Percent_Change"] = (
     (filtered_df["Y_2022"] - filtered_df["Y_1970"]) / filtered_df["Y_1970"]
@@ -71,7 +76,7 @@ print(final_df.head(n=10))
 
 
 # Plotting
-plt.figure(figsize=(12, 6))  # Adjust figure size (optional)
+plt.figure(figsize=(12, 6))
 plt.plot(
     final_df["Name"], final_df["Percent_Change"], marker="o", linestyle="-", color="b"
 )
@@ -82,11 +87,11 @@ plt.xlabel("Country", fontsize=12)
 plt.ylabel("Percent Change", fontsize=12)
 
 # Display the plot
-plt.tight_layout()  # Adjust layout to prevent label overlap
+plt.tight_layout()
 plt.show()
 
 # bar chart for contributions
-plt.figure(figsize=(12, 6))  # Adjust figure size (optional)
+plt.figure(figsize=(12, 6))
 plt.bar(final_df["Name"], final_df["Contribution_2022"], color="c")
 
 # Add title and labels
@@ -95,7 +100,7 @@ plt.xlabel("Country", fontsize=12)
 plt.ylabel("Contribution in 2022 (%)", fontsize=12)
 
 # Display the plot
-plt.tight_layout()  # Adjust layout to prevent label overlap
+plt.tight_layout()
 plt.show()
 
 final_df.to_csv("./final_dfs/final_pm10_trends.csv", index=False)

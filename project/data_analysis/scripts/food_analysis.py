@@ -15,6 +15,7 @@ countries_list = [
     "Brazil",
     "Chile",
     "Venezuela",
+    "Canada",
 ]
 
 filtered_df = df[df["Name"].isin(countries_list)]
@@ -23,19 +24,12 @@ years = [year for year in range(1970, 2019)]  # List of years from 1970 to 2018
 
 # Group by Name & sum all the yearly columns
 aggregated_df = filtered_df.groupby("Name")[years].sum().reset_index()
-
-# Optionally, you can reset the index to make 'Name' a normal column again
 aggregated_df = aggregated_df.reset_index()
-
-# Show the resulting DataFrame
-print("aggregate:")
-print(aggregated_df)
 
 trends_df = pd.DataFrame()
 trends_df[["Name", 2018]] = aggregated_df[["Name", 2018]]
 
 # Calculate trend metrics
-
 # 1. Percent Change
 trends_df["Percent_Change"] = (
     (aggregated_df[2018] - aggregated_df[1970]) / aggregated_df[1970]
@@ -74,7 +68,7 @@ print(trends_df)
 
 
 # Plotting
-plt.figure(figsize=(12, 6))  # Adjust figure size (optional)
+plt.figure(figsize=(12, 6))
 plt.plot(
     trends_df["Name"], trends_df["Percent_Change"], marker="o", linestyle="-", color="b"
 )
@@ -85,11 +79,11 @@ plt.xlabel("Country", fontsize=12)
 plt.ylabel("Percent Change", fontsize=12)
 
 # Display the plot
-plt.tight_layout()  # Adjust layout to prevent label overlap
+plt.tight_layout()
 plt.show()
 
 # bar chart for contributions
-plt.figure(figsize=(12, 6))  # Adjust figure size (optional)
+plt.figure(figsize=(12, 6))
 plt.bar(trends_df["Name"], trends_df["Contribution_2018"], color="c")
 
 # Add title and labels
@@ -101,7 +95,7 @@ plt.xlabel("Country", fontsize=12)
 plt.ylabel("Contribution in 2018 (%)", fontsize=12)
 
 # Display the plot
-plt.tight_layout()  # Adjust layout to prevent label overlap
+plt.tight_layout()
 plt.show()
 
 trends_df.to_csv("./final_dfs/final_food_trends.csv", index=False)
